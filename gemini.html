@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Student Registration Form </title>
+  <style>
+    form {
+      margin: auto;
+      width: min(600px, 80%);
+      padding: 20px;
+      border: 1px solid #ddd;
+      border-radius: 10px;
+    }
+
+    h2 {
+      text-align: center;
+      font-size: 28px;
+      margin-bottom: 20px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: bold;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="datetime-local"],
+    input[type="file"],
+    textarea,
+    select,
+    #dob {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 20px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      box-sizing: border-box;
+      opacity: 0.5;
+      transition: all 0.3s ease;
+    }
+
+    input[type="file"] {
+      background-color: white;
+    }
+
+    input[type="file"]::file-selector-button {
+      background-color: #854d28;
+      color: #fff;
+      padding: 10px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-right:10px; 
+      /* font-size: 16px; */
+      transition: background-color 0.3s ease;
+    }
+
+    input[type="file"]::file-selector-button:hover {
+      background-color: #6e4225;
+    }
+
+    input[type="text"]:focus,
+    input[type="email"]:focus,
+    input[type="datetime-local"]:focus,
+    input[type="file"]:focus,
+    textarea:focus,
+    select:focus {
+      border-color: #ddd;
+      outline: none;
+    }
+
+    textarea {
+      height: 100px;
+      resize: vertical;
+    }
+
+    .buttons {
+      display: flex;
+      justify-content: center;
+    }
+
+    .buttons button {
+      background-color: #854d28;
+      color: #fff;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      width: 150px;
+      font-size: 16px;
+      cursor: pointer;
+      margin-right: 10px;
+    }
+
+    .buttons button:hover {
+      background-color: #6e4225;
+    }
+    .cgpa {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 20px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      box-sizing: border-box;
+      opacity: 0.5;
+      /* color:#4fc1e9 ; */
+      /* color:#E6e9ed */
+      /* color:#f5f7fa; */
+      color: #ffce54;
+    }
+  </style>
+  <script defer src="registration.js"></script>
+</head>
+<body style="background-color: #000;">
+  <link rel="stylesheet" href="design1.css">
+  <form>
+    <h2>ON-DUTY REGISTRATION FORM</h2>
+
+    <label for="first-name">First Name(With Initial):</label>
+    <input type="text" id="first-name" name="first-name" required>
+
+    <label for="register-number">Register Number:</label>
+    <input type="text" id="register-number" name="register-number" required>
+
+    <label for="email">Email Address:</label>
+    <input type="email" id="email" name="email" required>
+
+    <label>Enter Your CGPA</label>
+    <input type="number" class="cgpa" max="10" min="6" step="0.1" required>
+
+    <label for="start-date">Event Start Date:</label>
+    <input type="datetime-local" id="start-date" name="start-date" class="datetime" required>
+
+    <label for="end-date">Event End Date:</label>
+    <input type="datetime-local" id="end-date" name="end-date" class="datetime" required>
+
+    <label for="file1">Upload File1:</label>
+    <input type="file" class="file1" name="file1" required>
+
+    <label for="file2">Upload File2:</label>
+    <input type="file" class="file1" name="file2" required>
+
+    <label for="description">Description:</label>
+    <textarea type="text" id="description" maxlength="250" style="font-size: medium;color: black;"></textarea>
+
+    <div class="buttons">
+      <button type="reset">Reset</button>
+      <button type="submit">Submit</button>
+    </div>
+  </form>
+
+  <script>
+    // Validate description word count
+    document.querySelector('form').addEventListener('submit', function (e) {
+      const description = document.getElementById('description').value.trim();
+      const wordCount = description.split(/\s+/).length;
+      if (wordCount < 9 || wordCount > 250) {
+        alert('Description must be between 9 and 250 words.');
+        e.preventDefault();
+      }
+    });
+
+    // Check uploaded files
+    const fileInputs = document.querySelectorAll('input[type="file"]');
+    fileInputs.forEach(input => {
+      input.addEventListener('change', function () {
+        if (this.files.length > 0) {
+          const fileName = this.files[0].name;
+          if (confirm(`Is this the correct file: ${fileName}?`) === false) {
+            this.value = ''; // Clear the file input
+          }
+        }
+      });
+    });
+  </script>
+</body>
+</html>
